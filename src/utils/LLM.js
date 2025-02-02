@@ -5,7 +5,7 @@ const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
 exports.processWithAI = async (products) => {
   try {
     const response = await openai.chat.completions.create({
-      model: "gpt-4",
+      model: "deepseek/deepseek-r1:free",
       messages: [
         {
           role: "system",
