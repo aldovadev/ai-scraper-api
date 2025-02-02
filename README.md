@@ -30,9 +30,12 @@ npm install
 Create a `.env` file in the project root and add your OpenAI API key:
 
 ```sh
-OPENROUTER_API_KEY=your-openai-api-key
-AI_MODEL=your-ai-model
+OPENROUTER_API_KEY=..
+AI_MODEL=...
 ```
+
+- For API Key you can access openrouter website at https://openrouter.ai and generate new key.
+- for AI model recomendation is using "deepseek/deepseek-chat".
 
 ### 4️⃣ **Run the Server**
 
@@ -53,13 +56,13 @@ npm run dev
 ### **Endpoint:**
 
 ```http
-GET /api/scraper?query=<search_term>$pgn=<pagination>
+GET /api/scraper?query=<search_term>$pgn=<pagination>&desc<description_state>
 ```
 
 ### **Example Request:**
 
 ```sh
-curl "http://localhost:8800/scrape?query=nike&pgn=1"
+curl "http://localhost:8800/scrape?query=nike&pgn=1&desc=false"
 ```
 
 ### **Example Response:**
@@ -100,5 +103,5 @@ curl "http://localhost:8800/scrape?query=nike&pgn=1"
 
 - **Express.js** - API framework
 - **Puppeteer** - Web scraping
-- **Deepseek API** - AI-based data analysis
+- **Openrouter API** - AI-based data analysis
 - **dotenv** - Environment variable management

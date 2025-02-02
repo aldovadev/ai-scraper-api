@@ -1,8 +1,9 @@
 const express = require("express");
-const { scrapeEbay } = require("../controllers/scraper.controller");
+const scraperController = require("../controllers/scraper.controller");
 
 const router = express.Router();
 
-router.get("/", scrapeEbay);
+router.get("/stream", scraperController.scrapeProductsStreamController);
+router.get("/", scraperController.scrapeProductsController);
 
 module.exports = router;
