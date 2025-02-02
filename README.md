@@ -30,8 +30,8 @@ npm install
 Create a `.env` file in the project root and add your OpenAI API key:
 
 ```sh
-OPENROUTER_API_KEY=..
-AI_MODEL=...
+OPENROUTER_API_KEY=openrouter-api-key
+AI_MODEL=llm-model
 ```
 
 - For API Key you can access openrouter website at https://openrouter.ai and generate new key.
