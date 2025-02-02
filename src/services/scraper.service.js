@@ -1,16 +1,17 @@
 const puppeteer = require("puppeteer");
 const { map } = require("../app");
+const { processWithAI } = require("../utils/LLM");
 
-exports.scrapeProducts = async (query, pgn) => {
+exports.scrapeProducts = async (query, pgn, desc) => {
   const url = `https://www.ebay.com/sch/i.html?_nkw=${encodeURIComponent(
     query
-  )}&_sacat=0&_from=R40&_pgn=${pgn}`;
+  )}&_sacat=0&_from=R40&_pgn=${pgn}&desc=${desc}`;
 
   const browser = await puppeteer.launch({ headless: true });
   const page = await browser.newPage();
   await page.goto(url, { waitUntil: "domcontentloaded" });
 
-  const pageProducts = await page.evaluate(() => {
+  const products = await page.evaluate(() => {
     return Array.from(document.querySelectorAll(".s-item")).map((item) => {
       const title =
         item.querySelector(".s-item__title")?.textContent?.trim() || "-";
@@ -23,25 +24,36 @@ exports.scrapeProducts = async (query, pgn) => {
     });
   });
 
-  for (let product of pageProducts) {
+  for (let product of products) {
     if (product.link !== "-") {
-      const productPage = await browser.newPage();
-      await productPage.goto(product.link, {
-        waitUntil: "domcontentloaded",
-      });
+      await page.goto(product.link, { waitUntil: "domcontentloaded" });
 
-      product.description = await page.evaluate(() => {
-        return document.querySelector("#desc_ifr")?.textContent?.trim() || "-";
-      });
+      const iframeElement = await page.$("iframe#desc_ifr");
+      let description = "-";
 
-      console.log(product.description);
-
-      await productPage.close();
+      if (iframeElement) {
+        const iframe = await iframeElement.contentFrame();
+        if (iframe) {
+          description = await iframe.evaluate(
+            () => document.body.textContent.trim() || "-"
+          );
+        }
+      }
+      product.description = description;
     } else {
-      product.description = "-";
+      description = await page.evaluate(() => {
+        return (
+          document.querySelector("#viTabs_0_is")?.textContent?.trim() ||
+          document.querySelector(".itemAttr")?.textContent?.trim() ||
+          "-"
+        );
+      });
     }
   }
 
   await browser.close();
-  return pageProducts;
+
+  products = await processWithAI(products, query);
+
+  return products;
 };

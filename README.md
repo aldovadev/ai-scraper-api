@@ -70,8 +70,8 @@ curl "http://localhost:8800/scrape?query=nike&pgn=1"
   "results": [
     {
       "title": "NIKE R1 Limited Edition",
-      "price": "IDR 1,999.00",
-      "description": "High-end MacBook Pro with M1 chip."
+      "price": "IDR 1,999,000.00",
+      "description": "The best NIKE Shoes."
     }
   ]
 }

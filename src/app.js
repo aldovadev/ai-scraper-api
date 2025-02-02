@@ -1,5 +1,7 @@
 const express = require("express");
+const dotenv = require("dotenv");
 const scraperRoutes = require("./routes/scraper.routes");
+dotenv.config();
 
 const app = express();
 
