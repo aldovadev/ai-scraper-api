@@ -1,4 +1,4 @@
-# Ecommerce Scraper API
+# AI Scraper API
 
 This project is a Node.js-based API that scrapes product listings from eBay and processes the extracted data using OpenAI. It uses Puppeteer to fetch product details and an AI model to analyze the listings.
 
@@ -15,7 +15,7 @@ This project is a Node.js-based API that scrapes product listings from eBay and 
 ### 1️⃣ **Clone the Repository**
 
 ```sh
-git clone https://github.com/your-username/ebay-scraper-api.git
+git clone https://github.com/aldovadev/ai-scraper-api.git
 cd ebay-scraper-api
 ```
 
@@ -59,7 +59,7 @@ npm run dev
 GET /api/scraper?query=<search_term>$pgn=<pagination>&desc<description_state>
 ```
 
-### **Example Request:**
+### **Example GET Request:**
 
 ```sh
 curl "http://localhost:8800/scrape?query=nike&pgn=1&desc=false"
@@ -69,8 +69,28 @@ curl "http://localhost:8800/scrape?query=nike&pgn=1&desc=false"
 
 ```json
 {
-  "query": "nike",
-  "results": [
+  "products": [
+    {
+      "title": "NIKE R1 Limited Edition",
+      "price": "IDR 1,999,000.00",
+      "description": "The best NIKE Shoes."
+    }
+  ]
+}
+```
+
+### **Example Stream Request:**
+
+```sh
+curl "http://localhost:8800/scrape/stream?query=nike&pgn=1&desc=false"
+```
+
+### **Example Response:**
+
+```json
+{
+  "loading": "1%",
+  "products": [
     {
       "title": "NIKE R1 Limited Edition",
       "price": "IDR 1,999,000.00",
@@ -85,7 +105,7 @@ curl "http://localhost:8800/scrape?query=nike&pgn=1&desc=false"
 ## 🛠️ Project Structure
 
 ```
-/ebay-scraper-api
+/ai-scraper-api
 │── /src
 │   │── /routes
 │   │── /controllers
