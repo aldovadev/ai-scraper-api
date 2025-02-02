@@ -1,4 +1,4 @@
-# eBay Scraper API
+# Ecommerce Scraper API
 
 This project is a Node.js-based API that scrapes product listings from eBay and processes the extracted data using OpenAI. It uses Puppeteer to fetch product details and an AI model to analyze the listings.
 
